@@ -33,20 +33,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSave.setOnClickListener(this);
 
         SharedPreferences sp = getSharedPreferences("logs", MODE_PRIVATE);
-        String receivedLog = sp.getString("receivedLog", "There are no received log.");
+        String receivedSender = sp.getString("receivedSender", "N/A");
+        String receivedTimestamp = sp.getString("receivedTimestamp", "N/A");
+        String receivedMsg = sp.getString("receivedMsg", "N/A");
 
-        String sentLog = sp.getString("lastSentLog", "Didn't saved Sent Logs.");
-        String deliverLog = sp.getString("lastDeliveryLog", "Didn't saved Deliver Logs.");
+        String sentTimestamp = sp.getString("sentTimestamp", "N/A");
+        String sentMsg = sp.getString("sentMsg", "N/A");
+        String sentTarget = sp.getString("sentTarget", "N/A");
 
-        String exception = sp.getString("exception", "There are no exception.");
+        String lastSentLog = sp.getString("lastSentLog", "N/A");
+        String lastDeliveryLog = sp.getString("lastDeliveryLog", "N/A");
+
+        String exception = sp.getString("exception", "N/A");
 
 
-        tvLogs.setText("Received Log " + "\n" +
-                receivedLog + "\n\n" +
-                "Send Log" + "\n" +
-                "SentLog: " + sentLog + "\n" +
-                "DeliverLog: " + deliverLog + "\n\n" +
-                "Exception " + "\n" + exception);
+        tvLogs.setText("#Received Log " + "\n" +
+                "-Timestamp: " +  receivedTimestamp + "\n" +
+                "-Sender: " + receivedSender + "\n" +
+                "-Message: " + receivedMsg +
+                "\n\n" +
+
+                "#Send Log" + "\n" +
+                "-Timestamp: " + sentTimestamp + "\n" +
+                "-Target: " + sentTarget + "\n" +
+                "-Message: " + sentMsg + "\n" +
+                "-LastSentLog: " + lastSentLog + "\n" +
+                "-LastDeliverLog: " + lastDeliveryLog +
+                "\n\n" +
+
+                "#Exception " + "\n" + exception);
+
 
         SharedPreferences numSp = getSharedPreferences("numbers", MODE_PRIVATE);
         String sender = numSp.getString("sender", "");
@@ -63,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         SharedPreferences sp = getSharedPreferences("numbers", MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("sender", etSender.getText().toString());
+        editor.commit();
         editor.putString("target", etTarget.getText().toString());
         editor.commit();
 

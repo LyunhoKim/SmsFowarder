@@ -1,6 +1,7 @@
 package com.klh.smsfowarder.smsfowarder;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -75,6 +76,10 @@ public class SmsReceiver extends BroadcastReceiver {
 
             try {
 
+                SharedPreferences sp = context.getSharedPreferences("numbers", context.MODE_PRIVATE);
+                final String sender = sp.getString("sender", "");
+                final String target = sp.getString("target", "");
+
 
                 Bundle bundle = intent.getExtras();
                 Object messages[] = (Object[]) bundle.get("pdus");
@@ -103,25 +108,22 @@ public class SmsReceiver extends BroadcastReceiver {
 
                 SharedPreferences logSP = context.getSharedPreferences("logs", context.MODE_PRIVATE);
                 SharedPreferences.Editor ed = logSP.edit();
-                ed.putString("receivedLog", "Sender: " + origNumber +
-                        "\nTimestamp: " + timestamp +
-                        "\nContents: " + message);
+                ed.putString("receivedSender", origNumber);
+                ed.putString("receivedTimestamp", timestamp);
+                ed.putString("receivedMsg", message);
                 ed.commit();
 
 
-                SharedPreferences sp = context.getSharedPreferences("numbers", context.MODE_PRIVATE);
-                String sender = sp.getString("sender", "");
-                String target = sp.getString("target", "");
+
 
                 Log.d("onReceive()", origNumber + " " + curDate.toString() + " " + message);
                 if (origNumber.contains(sender)) {
-                    SmsManager smsManager = SmsManager.getDefault();
-                    PendingIntent sentIntent = PendingIntent.getBroadcast(context, 0, new Intent("com.klh.smsfowarder.SENT_SMS"), 0);
-                    PendingIntent deliverIntent = PendingIntent.getBroadcast(context, 0, new Intent("com.klh.smsfowarder.DELIVERY_SMS"), 0);
-                    smsManager.sendTextMessage(target, null, message, sentIntent, deliverIntent);
+                    sendSMS(target, message, context);
                 }
-
                 ed.remove("exception");
+                ed.putString("sentTimestamp", sdf.format(cal.getTime()));
+                ed.putString("sentMsg", message);
+                ed.putString("sentTarget", target);
                 ed.commit();
             } catch (Exception e) {
                 SharedPreferences logSP = context.getSharedPreferences("logs", context.MODE_PRIVATE);
@@ -130,5 +132,22 @@ public class SmsReceiver extends BroadcastReceiver {
                 ed.commit();
             }
         }
+    }
+
+    void sendSMS(String phoneNumber, String msg, Context c) {
+        SmsManager smsManager = SmsManager.getDefault();
+        PendingIntent sentIntent = PendingIntent.getBroadcast(c, 0, new Intent("com.klh.smsfowarder.SENT_SMS"), 0);
+        PendingIntent deliverIntent = PendingIntent.getBroadcast(c, 0, new Intent("com.klh.smsfowarder.DELIVERY_SMS"), 0);
+
+        if(msg.length() > 160) {
+            msg += "MMS:";
+            ArrayList<String> msgList = smsManager.divideMessage(msg);
+            smsManager.sendMultipartTextMessage(phoneNumber, null, msgList, null, null);
+            Log.d("onReceive()", "send MMS:" + msg.length());
+        } else {
+            smsManager.sendTextMessage(phoneNumber, null, msg, sentIntent, deliverIntent);
+            Log.d("onReceive()", "send SMS:" + msg.length());
+        }
+
     }
 }

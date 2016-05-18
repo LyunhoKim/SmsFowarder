@@ -17,13 +17,15 @@
             android:id="@+id/etSender"
             android:hint="Sender"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:numeric="integer" />
 
         <EditText
             android:id="@+id/etTarget"
             android:hint="Target"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:numeric="integer" />
 
         <Button
             android:id="@+id/btnSave"

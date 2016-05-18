@@ -25,6 +25,7 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
                 <action android:name="com.klh.smsfowarder.SENT_SMS" />
                 <action android:name="com.klh.smsfowarder.DELIVERY_SMS" />
+
             </intent-filter>
         </receiver>
     </application>
