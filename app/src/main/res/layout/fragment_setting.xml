@@ -1,0 +1,73 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_weight="1"
+    android:background="#E0E0E0"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.klh.smsfowarder.fragment.SettingFragment">
+
+    <!--<com.klh.smsfowarder.PinnedSectionListView.PinnedSectionListView-->
+        <!--android:id="@+id/lv_phonenumbers"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+
+    <!--</com.klh.smsfowarder.PinnedSectionListView.PinnedSectionListView>-->
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:paddingBottom="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:id="@+id/layout_senders"
+            android:orientation="vertical"
+            android:padding="0dp"
+            android:layout_margin="10dp"
+            android:background="#e0e0e0"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:text="Sender"
+                android:textColor="#FFFFFF"
+                android:textSize="15dp"
+                android:textAlignment="viewStart"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/sectionlayout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_receivers"
+            android:orientation="vertical"
+            android:padding="0dp"
+            android:layout_margin="10dp"
+            android:background="#e0e0e0"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:text="Receiver"
+                android:textColor="#FFFFFF"
+                android:textSize="15dp"
+                android:layout_marginBottom="5dp"
+                android:textAlignment="viewStart"
+                android:background="@drawable/sectionlayout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

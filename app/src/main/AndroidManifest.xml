@@ -12,22 +12,46 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.klh.smsfowarder.activity.MainActivity">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+
+        <receiver android:name="com.klh.smsfowarder.receiver.SmsReceiver">
+            <intent-filter android:priority="9999">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+                <action android:name="android.provider.Telephony.SMS_DELIVER" />
+                <action android:name="com.klh.smsfowarder.SENT_SMS" />
+                <action android:name="com.klh.smsfowarder.DELIVERY_SMS" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.klh.smsfowarder.activity.MainScreenActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name ="com.klh.smsfowarder.smsfowarder.SmsReceiver">
-            <intent-filter android:priority="9999">
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-                <action android:name="com.klh.smsfowarder.SENT_SMS" />
-                <action android:name="com.klh.smsfowarder.DELIVERY_SMS" />
-
-            </intent-filter>
-        </receiver>
+        <activity android:name="com.klh.smsfowarder.activity.NewPhoneNumber" />
+        <activity
+            android:name="com.klh.smsfowarder.activity.LogDetailActivity"
+            android:label="@string/title_activity_log_detail"
+            android:parentActivityName="com.klh.smsfowarder.activity.MainScreenActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.klh.smsfowarder.activity.MainScreenActivity" />
+        </activity>
     </application>
 
 </manifest>
